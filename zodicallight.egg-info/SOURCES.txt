@@ -1,0 +1,5 @@
+setup.py
+zodicallight.egg-info/PKG-INFO
+zodicallight.egg-info/SOURCES.txt
+zodicallight.egg-info/dependency_links.txt
+zodicallight.egg-info/top_level.txt
