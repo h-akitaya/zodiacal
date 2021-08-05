@@ -2,7 +2,7 @@
 #
 #    
 #    	G N U P L O T
-#    	Version 5.4 patchlevel 0    last modified 2020-07-13 
+#    	Version 5.4 patchlevel 1    last modified 2020-12-01 
 #    
 #    	Copyright (C) 1986-1993, 1998, 2004, 2007-2020
 #    	Thomas Williams, Colin Kelley and many others
@@ -44,7 +44,7 @@ set tics back
 set grid nopolar
 set grid xtics nomxtics ytics nomytics noztics nomztics nortics nomrtics \
  nox2tics nomx2tics noy2tics nomy2tics nocbtics nomcbtics
-set grid layerdefault   lt 0 linecolor 0 linewidth 0.500,  lt 0 linecolor 0 linewidth 0.500
+set grid layerdefault   lt 0 linecolor 0 linewidth 0.500 dashtype solid,  lt 0 linecolor 0 linewidth 0.500 dashtype solid
 unset raxis
 set theta counterclockwise right
 set style parallel front  lt black linewidth 2.000 dashtype solid
@@ -129,7 +129,7 @@ set timestamp  font "" textcolor lt -1 norotate
 set trange [ * : * ] noreverse nowriteback
 set urange [ * : * ] noreverse nowriteback
 set vrange [ * : * ] noreverse nowriteback
-set xlabel "Eliptical Latitude (deg)" 
+set xlabel "Ecliptical Latitude (deg)" 
 set xlabel  font "" textcolor lt -1 norotate
 set x2label "" 
 set x2label  font "" textcolor lt -1 norotate
