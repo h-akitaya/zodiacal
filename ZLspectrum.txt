@@ -1,4 +1,4 @@
-# Zodiacal light at ecliptic plane (Ecliptic longitude = 0 deg)
+# Zodiacal light at ecliptic plane (Ecliptic latitude = 0 deg)
 # Wavelength [um], Zodiacal light λ*I_λ [nW/m2/sr], Error [nW/m2/sr]
       0.22499999       13.105114       13.010723
       0.27399999       46.342613       7.6906267
