@@ -8,7 +8,7 @@
         Ver. 1.2  2021/07/28   H. Akitaya; output with astropy.units
         Ver. 1.3  2021/07/29   H. Akitaya; integration in wavelength range; photon flux
         Ver. 1.4  2021/07/30   H. Akitaya; interpolation using scipy
-        Ver. 1.5  2021/08/05   H. Akitaya; change wavelength range for o and j-bands.
+        Ver. 1.6  2021/08/05   H. Akitaya; change wavelength range for o and j-bands.
 
    Sample usage:
        from zodiacallight import ZodiacalLight
