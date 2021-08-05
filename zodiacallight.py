@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 '''
-    Zodical light calculator
+    Zodiacal light calculator
        Based on Tsumura-san's table
         Ver. 1.0  2020/11/02   H. Akitaya
         Ver. 1.1  2021/07/06   H. Akitaya; comments implemented
@@ -11,8 +11,8 @@
         Ver. 1.5  2021/08/05   H. Akitaya; change wavelength range for o and j-bands.
 
    Sample usage:
-       from zodicallight import ZodicalLight
-       zd = ZodicalLight()
+       from zodiacallight import ZodiacalLight
+       zd = ZodiacalLight()
        zd(1.2, 0)
        714.1626404659994
 '''
@@ -25,19 +25,19 @@ import numpy as np
 from scipy import integrate
 from scipy import interpolate
 
-# Table of zodical light wavelength dependency
+# Table of zodiacal light wavelength dependency
 ZL_SPEC_FN = os.path.dirname(__file__) + '/' + 'ZLspectrum.txt'  
 
-# Table of zodical light latitude dependency
+# Table of zodiacal light latitude dependency
 ZL_ECLIPLAT_FN = os.path.dirname(__file__) + '/' + 'ZL_ecliptic_profile.txt'
 
 # normalization flux (flux at ecliptic latitude at 0 deg)
 ZL_ECLIPLAT_NORM = 691.82538
 
-# Zodical light photon number flux at zlat=0 deg.
+# Zodiacal light photon number flux at zlat=0 deg.
 # Unit: photons/s/str/m^2
 # Calculated in 2021-07-30 using:
-# zd = ZodicalLight()
+# zd = ZodiacalLight()
 # wl1 = [0.5, 1.0, 1.5, 2.0]
 # dwl = 0.5
 # for wl in wl1:
@@ -50,8 +50,8 @@ ZL_PHOTONFLUX_BAND = {'o': 1.9220403980285938e+12,
                       'k': 5.6836829e+11,
                       }
 
-class ZodicalLight(object):
-    ''' Class for Zodical Light Calculation.
+class ZodiacalLight(object):
+    ''' Class for Zodiacal Light Calculation.
     '''
     
     def __init__(self, data_read=True):
@@ -74,10 +74,10 @@ class ZodicalLight(object):
             return self.get_zl_at(wl, lat, w_scipy=w_scipy) *(1e-9*u.W/(u.m**2)/u.sr)
 
     def __str__(self):
-        return 'ZodicalLight(wl[um], latitude[deg]) [nW/m^2/str]'
+        return 'ZodiacalLight(wl[um], latitude[deg]) [nW/m^2/str]'
 
     def read_data_zl_spec(self, fn=ZL_SPEC_FN):
-        ''' Read zodical light table (wavelength dependency).
+        ''' Read zodiacal light table (wavelength dependency).
         '''
         with open(fn, 'r') as f:
             for line in f.readlines():
@@ -97,7 +97,7 @@ class ZodicalLight(object):
                                      kind='cubic')
 
     def read_data_zl_ecliplat(self, fn=ZL_ECLIPLAT_FN):
-        ''' Read zodical light table (latitude dependency).
+        ''' Read zodiacal light table (latitude dependency).
         '''
         with open(fn, 'r') as f:
             for line in f.readlines():
@@ -116,13 +116,13 @@ class ZodicalLight(object):
                                      kind='cubic')
 
     def read_data_all(self):
-        ''' Read zodical light tables.
+        ''' Read zodiacal light tables.
         '''
         self.read_data_zl_spec()
         self.read_data_zl_ecliplat()
 
     def get_zl_wavelength_at(self, wl, w_scipy=True):
-        ''' Calculate scale of zodical light at wavelength wl.
+        ''' Calculate scale of zodiacal light at wavelength wl.
         '''
         if w_scipy is True:  # Use scipy interpolation
             return self._f_wscipy_get_zl_wavelength_at(wl)
@@ -130,7 +130,7 @@ class ZodicalLight(object):
             return self._function_from_table(self.zl_spec, wl)
 
     def get_zl_normalized_ecliplat_at(self, ecliplat, w_scipy=True):
-        ''' Calculate scale of zodical light at latitude ecliplat.
+        ''' Calculate scale of zodiacal light at latitude ecliplat.
         '''
         if w_scipy is True:
             return self._f_wscipy_get_zl_normalized_ecliplat_at(ecliplat) / ZL_ECLIPLAT_NORM
@@ -139,13 +139,13 @@ class ZodicalLight(object):
                                                 ecliplat) / ZL_ECLIPLAT_NORM
 
     def get_zl_at(self, wl, ecliplat, unit=False, w_scipy=True):
-        ''' Calculate zodical light flux at wavelength wl and latitude ecliplat.
+        ''' Calculate zodiacal light flux at wavelength wl and latitude ecliplat.
         '''
         try:
             f =  self.get_zl_wavelength_at(wl, w_scipy=w_scipy) * \
                 self.get_zl_normalized_ecliplat_at(ecliplat, w_scipy=w_scipy)
         except TypeError:
-            sys.stderr.write('Zodical light calcuration error\n')
+            sys.stderr.write('Zodiacal light calcuration error\n')
             raise(TypeError)
         if unit is False:
             return f
@@ -153,11 +153,11 @@ class ZodicalLight(object):
             return 1e-9 * f * (u.W/u.m**2/u.sr)  # [W/m^2/str]
 
     def get_zl_photonflux_at(self, wl, ecliplat, unit=False):
-        ''' Calculate zodical light photon flux at wavelength wl 
+        ''' Calculate zodiacal light photon flux at wavelength wl 
         and latitude ecliplat.
         '''
         f = self.get_zl_at(wl, ecliplat, unit=True)
-        pe = ZodicalLight.get_photon_energy(wl, unit=True)
+        pe = ZodiacalLight.get_photon_energy(wl, unit=True)
         pf = (f/pe).si
         if unit is False:
             return pf.value
@@ -165,7 +165,7 @@ class ZodicalLight(object):
             return pf
 
     def get_zl_photonflux_wlinteg(self, wl1, wl2, ecliplat, unit=False):
-        ''' Calculate zodical light photon flux integrated between 
+        ''' Calculate zodiacal light photon flux integrated between 
         wavelength wl1 and wl2, atlatitude ecliplat.
         '''
         pf_integ = integrate.quad(lambda x: self.get_zl_photonflux_at(
@@ -209,7 +209,7 @@ class ZodicalLight(object):
             xf = elms[0]
             yf = elms[1]
             if (xf_before <= x) and (x < xf):
-                y = ZodicalLight.function_interpolate(xf_before, xf, yf_before, yf, x)
+                y = ZodiacalLight.function_interpolate(xf_before, xf, yf_before, yf, x)
                 return y
             xf_before = xf
             yf_before = yf
@@ -238,7 +238,7 @@ if __name__ == '__main__':
         sys.exit(1)
     wl = float(sys.argv[1])  # wavelength (um)
     ecliplat = float(sys.argv[2])  # latitude (deg)
-    zl = ZodicalLight()
+    zl = ZodiacalLight()
     zl.read_data_all()
     flux = zl.get_zl_at(1.25, 40.0)
     # print('{:13.4f}'.format(flux))
@@ -252,8 +252,8 @@ if __name__ == '__main__':
 
 
 '''
-./zodicallight.py 1.25 0 > zod_1.25.xy
-./zodicallight.py 0.75 0 > zod_0.75.xy
-./zodicallight.py 1.75 0 > zod_1.75.xy
-./zodicallight.py 2.25 0 > zod_2.25.xy
+./zodiacallight.py 1.25 0 > zod_1.25.xy
+./zodiacallight.py 0.75 0 > zod_0.75.xy
+./zodiacallight.py 1.75 0 > zod_1.75.xy
+./zodiacallight.py 2.25 0 > zod_2.25.xy
 '''

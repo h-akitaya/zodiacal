@@ -1,12 +1,12 @@
-# Zodical Light Calculator
+# Zodiacal Light Calculator
 
 2021-08-25 H. Akitaya (PERC, CIT)
 
 # Install from pip
 
 ```
-$ git clone https://github.com/h-akitaya/zodicallight.git
-$ cd zodicallight
+$ git clone https://github.com/h-akitaya/zodiacallight.git
+$ cd zodiacallight
 $ pip install -e .
 ```
 
@@ -16,8 +16,8 @@ $ pip install -e .
 * Calculate energy flux density at wavelength wl (um) and ecliptical latitude lat (deg).
 
 ```python:test.py
-from zodicallight import ZodicalLight
-zd = ZodicalLight()
+from zodiacallight import ZodiacalLight
+zd = ZodiacalLight()
 
 wl = 1.0  # Wavelength (um)
 lat = 20.0  # Ecliptical Latitude (deg)
@@ -28,8 +28,8 @@ print(zd(wl, lat))  # nW/m^2/str
 * Calculate photon flux density at wavelength 'optical-band (o)' and ecliptical latitude lat (deg).
 
 ```python:test02.py
-from zodicallight import ZodicalLight
-zd = ZodicalLight()
+from zodiacallight import ZodiacalLight
+zd = ZodiacalLight()
 
 band = 'o'  # optical band ('o'(0.5-0.9 um), 'j(0.9-1.5 um)', 
             # 'h'(1.5-2.0 um), 'k'(2.0-2.5 um))
@@ -48,9 +48,9 @@ print(zd.get_zl_photonflux_band(band, lat, unit=False))
 import numpy as np
 import astropy.units as u
 
-from zodicallight import ZodicalLight
+from zodiacallight import ZodiacalLight
 
-zd = ZodicalLight()
+zd = ZodiacalLight()
 
 band = 'o'  # band name
 lat = 0.0  # Ecliptical Latitude (deg)
